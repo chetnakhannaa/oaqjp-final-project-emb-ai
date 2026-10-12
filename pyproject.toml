@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emotion-detector"
+version = "1.0.0"
+description = "Flask web application for emotion detection with IBM Watson NLP"
+requires-python = ">=3.10"
+dependencies = ["Flask>=3.0,<4", "requests>=2.31,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "pylint>=3,<4"]
+
+[tool.setuptools]
+packages = ["emotion_detector"]
+
+[tool.setuptools.package-data]
+emotion_detector = ["templates/*.html", "static/*.css"]

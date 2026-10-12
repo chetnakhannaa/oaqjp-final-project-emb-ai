@@ -1,0 +1,8 @@
+[MASTER]
+ignore-patterns=^\.
+
+[MESSAGES CONTROL]
+disable=missing-module-docstring,invalid-name
+
+[FORMAT]
+max-line-length=100

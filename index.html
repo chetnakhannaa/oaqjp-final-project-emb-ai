@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Emotion Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main class="card">
+      <p class="eyebrow">Watson NLP</p>
+      <h1>Emotion Detector</h1>
+      <p class="intro">Enter a sentence to see the emotions expressed in it.</p>
+      <form id="emotion-form">
+        <label for="textToAnalyze">Text to analyze</label>
+        <textarea id="textToAnalyze" name="textToAnalyze" rows="5" required placeholder="I'm so happy to be here!"></textarea>
+        <button type="submit">Analyze emotion</button>
+      </form>
+      <section id="result" class="result" aria-live="polite" hidden></section>
+    </main>
+    <script>
+      const form = document.querySelector('#emotion-form');
+      const result = document.querySelector('#result');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        result.hidden = false;
+        result.textContent = 'Analyzing…';
+        try {
+          const response = await fetch('/emotionDetector', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ textToAnalyze: form.textToAnalyze.value })
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Analysis failed.');
+          result.textContent = data.summary;
+        } catch (error) {
+          result.textContent = error.message;
+        }
+      });
+    </script>
+  </body>
+</html>
